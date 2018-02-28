@@ -2,15 +2,17 @@
 
 set -e
 
-if [ "$#" -ne 1 ]; then
-  echo "Usage $0 <model dir>"
+if [ "$#" -lt 1 ]; then
+  echo "Usage $0 <model dir> [options]"
   exit 1
 fi
 
 MODELDIR=$(cd $1; pwd)
+shift
 IMAGE=${IMAGE:-hiroara/tensorflow-model-server:${TAG:-latest}}
 PORT=8500
+MODEL_NAME=${MODEL_NAME:-default}
 
-CONTAINER=$(docker run -it -d --rm -p ${PORT} -v ${MODELDIR}:/models ${IMAGE} tensorflow_model_server --enable_batching --model_base_path=/models)
+CONTAINER=$(docker run -it -d --rm -p ${PORT} -v ${MODELDIR}:/models ${IMAGE} tensorflow_model_server --model_base_path=/models "$@")
 HOSTPORT=$(docker port ${CONTAINER} ${PORT})
 echo ${CONTAINER} ${HOSTPORT}
