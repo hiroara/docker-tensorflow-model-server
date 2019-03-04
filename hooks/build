@@ -1,0 +1,9 @@
+#!/bin/sh
+
+BUILD_OPTIONS=" -f ${DOCKERFILE_PATH:-'.'} -t $IMAGE_NAME"
+
+if [ -n "$DOCKER_TAG" ] && [ ! "$DOCKER_TAG" = "latest" ]; then
+    BUILD_OPTIONS="${BUILD_OPTIONS} --build-arg TF_VERSION=$DOCKER_TAG"
+fi
+
+docker build ${BUILD_OPTIONS} .
