@@ -10,6 +10,6 @@ RUN apt-get update && apt-get install -y libstdc++6
 
 ARG TF_VERSION=1.13.0
 
-RUN wget "http://storage.googleapis.com/tensorflow-serving-apt/pool/tensorflow-model-server/t/tensorflow-model-server/tensorflow-model-server_${TF_VERSION}_all.deb" && \
+RUN wget "http://storage.googleapis.com/tensorflow-serving-apt/pool/tensorflow-model-server-${TF_VERSION}/t/tensorflow-model-server/tensorflow-model-server_${TF_VERSION}_all.deb" && \
     dpkg -i tensorflow-model-server_${TF_VERSION}_all.deb && \
     rm tensorflow-model-server_${TF_VERSION}_all.deb
